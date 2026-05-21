@@ -20,9 +20,18 @@ class AppLogger {
   );
 
   /// Log a message at the verbose/debug level.
-  static void d(String message, {String? tag, Object? error, StackTrace? stackTrace}) {
+  static void d(
+    String message, {
+    String? tag,
+    Object? error,
+    StackTrace? stackTrace,
+  }) {
     if (kDebugMode) {
-      _logger.d(_formatMessage(message, tag), error: error, stackTrace: stackTrace);
+      _logger.d(
+        _formatMessage(message, tag),
+        error: error,
+        stackTrace: stackTrace,
+      );
     }
   }
 
@@ -32,18 +41,45 @@ class AppLogger {
   }
 
   /// Log a message at the warning level.
-  static void w(String message, {String? tag, Object? error, StackTrace? stackTrace}) {
-    _logger.w(_formatMessage(message, tag), error: error, stackTrace: stackTrace);
+  static void w(
+    String message, {
+    String? tag,
+    Object? error,
+    StackTrace? stackTrace,
+  }) {
+    _logger.w(
+      _formatMessage(message, tag),
+      error: error,
+      stackTrace: stackTrace,
+    );
   }
 
   /// Log a message at the error level.
-  static void e(String message, {String? tag, Object? error, StackTrace? stackTrace}) {
-    _logger.e(_formatMessage(message, tag), error: error, stackTrace: stackTrace);
+  static void e(
+    String message, {
+    String? tag,
+    Object? error,
+    StackTrace? stackTrace,
+  }) {
+    _logger.e(
+      _formatMessage(message, tag),
+      error: error,
+      stackTrace: stackTrace,
+    );
   }
 
   /// Log a message at the wtf/critical level.
-  static void f(String message, {String? tag, Object? error, StackTrace? stackTrace}) {
-    _logger.f(_formatMessage(message, tag), error: error, stackTrace: stackTrace);
+  static void f(
+    String message, {
+    String? tag,
+    Object? error,
+    StackTrace? stackTrace,
+  }) {
+    _logger.f(
+      _formatMessage(message, tag),
+      error: error,
+      stackTrace: stackTrace,
+    );
   }
 
   static String _formatMessage(String message, String? tag) {

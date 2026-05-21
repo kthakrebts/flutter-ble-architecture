@@ -16,8 +16,12 @@ void main() {
   setUp(() {
     bleRepository = MockBleRepository();
     // Stub the streams so initialization does not throw or block
-    when(() => bleRepository.scanResults).thenAnswer((_) => const Stream.empty());
-    when(() => bleRepository.isScanning).thenAnswer((_) => const Stream.empty());
+    when(
+      () => bleRepository.scanResults,
+    ).thenAnswer((_) => const Stream.empty());
+    when(
+      () => bleRepository.isScanning,
+    ).thenAnswer((_) => const Stream.empty());
     bleScanBloc = BleScanBloc(bleRepository: bleRepository);
   });
 
@@ -33,14 +37,14 @@ void main() {
     blocTest<BleScanBloc, BleScanState>(
       'emits scanning status and calls startScan when StartScan is added',
       setUp: () {
-        when(() => bleRepository.startScan(serviceUuids: any(named: 'serviceUuids')))
-            .thenAnswer((_) async {});
+        when(
+          () =>
+              bleRepository.startScan(serviceUuids: any(named: 'serviceUuids')),
+        ).thenAnswer((_) async {});
       },
       build: () => bleScanBloc,
       act: (bloc) => bloc.add(const StartScan()),
-      expect: () => [
-        const BleScanState(status: BleScanStatus.scanning),
-      ],
+      expect: () => [const BleScanState(status: BleScanStatus.scanning)],
       verify: (_) {
         verify(() => bleRepository.startScan()).called(1);
       },
@@ -49,14 +53,26 @@ void main() {
     blocTest<BleScanBloc, BleScanState>(
       'emits success status and device list when UpdateScanResults is received',
       build: () => bleScanBloc,
-      act: (bloc) => bloc.add(const UpdateScanResults([
-        BleDevice(id: 'AA:BB:CC:DD:EE:FF', name: 'Telemetry Hub', rssi: -55, isConnectable: true),
-      ])),
+      act: (bloc) => bloc.add(
+        const UpdateScanResults([
+          BleDevice(
+            id: 'AA:BB:CC:DD:EE:FF',
+            name: 'Telemetry Hub',
+            rssi: -55,
+            isConnectable: true,
+          ),
+        ]),
+      ),
       expect: () => [
         const BleScanState(
           status: BleScanStatus.success,
           devices: [
-            BleDevice(id: 'AA:BB:CC:DD:EE:FF', name: 'Telemetry Hub', rssi: -55, isConnectable: true),
+            BleDevice(
+              id: 'AA:BB:CC:DD:EE:FF',
+              name: 'Telemetry Hub',
+              rssi: -55,
+              isConnectable: true,
+            ),
           ],
         ),
       ],

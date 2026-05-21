@@ -9,10 +9,9 @@ import 'package:flutter_ble_architecture/features/ble_scan/presentation/bloc/ble
 
 /// Business Logic Component managing BLE peripheral scanning.
 class BleScanBloc extends Bloc<BleScanEvent, BleScanState> {
-  BleScanBloc({
-    required BleRepository bleRepository,
-  })  : _bleRepository = bleRepository,
-        super(const BleScanState()) {
+  BleScanBloc({required BleRepository bleRepository})
+    : _bleRepository = bleRepository,
+      super(const BleScanState()) {
     on<StartScan>(_onStartScan);
     on<StopScan>(_onStopScan);
     on<UpdateScanResults>(_onUpdateScanResults);
@@ -39,10 +38,12 @@ class BleScanBloc extends Bloc<BleScanEvent, BleScanState> {
       await _bleRepository.startScan(serviceUuids: event.serviceUuids);
     } on Exception catch (e) {
       AppLogger.e('Scan start error: $e', tag: 'BleScanBloc');
-      emit(state.copyWith(
-        status: BleScanStatus.failure,
-        failure: BleFailure(e.toString()),
-      ));
+      emit(
+        state.copyWith(
+          status: BleScanStatus.failure,
+          failure: BleFailure(e.toString()),
+        ),
+      );
     }
   }
 
@@ -51,25 +52,34 @@ class BleScanBloc extends Bloc<BleScanEvent, BleScanState> {
       await _bleRepository.stopScan();
     } on Exception catch (e) {
       AppLogger.e('Scan stop error: $e', tag: 'BleScanBloc');
-      emit(state.copyWith(
-        status: BleScanStatus.failure,
-        failure: BleFailure(e.toString()),
-      ));
+      emit(
+        state.copyWith(
+          status: BleScanStatus.failure,
+          failure: BleFailure(e.toString()),
+        ),
+      );
     }
   }
 
-  void _onUpdateScanResults(UpdateScanResults event, Emitter<BleScanState> emit) {
-    emit(state.copyWith(
-      devices: event.devices,
-      status: BleScanStatus.success,
-    ));
+  void _onUpdateScanResults(
+    UpdateScanResults event,
+    Emitter<BleScanState> emit,
+  ) {
+    emit(state.copyWith(devices: event.devices, status: BleScanStatus.success));
   }
 
-  void _onUpdateScanningStatus(UpdateScanningStatus event, Emitter<BleScanState> emit) {
-    emit(state.copyWith(
-      isScanning: event.isScanning,
-      status: event.isScanning ? BleScanStatus.scanning : BleScanStatus.success,
-    ));
+  void _onUpdateScanningStatus(
+    UpdateScanningStatus event,
+    Emitter<BleScanState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        isScanning: event.isScanning,
+        status: event.isScanning
+            ? BleScanStatus.scanning
+            : BleScanStatus.success,
+      ),
+    );
   }
 
   @override

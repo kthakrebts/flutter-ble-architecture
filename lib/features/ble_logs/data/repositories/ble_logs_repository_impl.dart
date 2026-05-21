@@ -13,7 +13,8 @@ class BleLogsRepositoryImpl implements BleLogsRepository {
   }
 
   final Box<String> _box;
-  final StreamController<List<BleLogEntry>> _controller = StreamController<List<BleLogEntry>>.broadcast();
+  final StreamController<List<BleLogEntry>> _controller =
+      StreamController<List<BleLogEntry>>.broadcast();
 
   void _initStream() {
     _controller.add(_getLogsSync());
@@ -24,9 +25,14 @@ class BleLogsRepositoryImpl implements BleLogsRepository {
       final stored = _box.get(AppConstants.keyLogList);
       if (stored == null) return [];
       final decoded = jsonDecode(stored) as List<dynamic>;
-      return decoded.map((e) => BleLogEntry.fromJson(e as Map<String, dynamic>)).toList();
+      return decoded
+          .map((e) => BleLogEntry.fromJson(e as Map<String, dynamic>))
+          .toList();
     } on Exception catch (e) {
-      AppLogger.e('Failed to parse cached BLE logs: $e', tag: 'BleLogsRepositoryImpl');
+      AppLogger.e(
+        'Failed to parse cached BLE logs: $e',
+        tag: 'BleLogsRepositoryImpl',
+      );
       return [];
     }
   }
@@ -40,7 +46,11 @@ class BleLogsRepositoryImpl implements BleLogsRepository {
   }
 
   @override
-  Future<void> log(String message, {String level = 'INFO', String? deviceId}) async {
+  Future<void> log(
+    String message, {
+    String level = 'INFO',
+    String? deviceId,
+  }) async {
     try {
       final entry = BleLogEntry(
         timestamp: DateTime.now(),
@@ -55,12 +65,18 @@ class BleLogsRepositoryImpl implements BleLogsRepository {
         logs.removeRange(500, logs.length);
       }
 
-      await _box.put(AppConstants.keyLogList, jsonEncode(logs.map((e) => e.toJson()).toList()));
+      await _box.put(
+        AppConstants.keyLogList,
+        jsonEncode(logs.map((e) => e.toJson()).toList()),
+      );
       _controller.add(logs);
-      
+
       AppLogger.d('[$level] $message', tag: 'BLE_EVENT');
     } on Exception catch (e) {
-      AppLogger.e('Failed to write BLE log to disk: $e', tag: 'BleLogsRepositoryImpl');
+      AppLogger.e(
+        'Failed to write BLE log to disk: $e',
+        tag: 'BleLogsRepositoryImpl',
+      );
     }
   }
 
@@ -69,7 +85,10 @@ class BleLogsRepositoryImpl implements BleLogsRepository {
     try {
       await _box.delete(AppConstants.keyLogList);
       _controller.add([]);
-      AppLogger.i('BLE Logs cleared successfully', tag: 'BleLogsRepositoryImpl');
+      AppLogger.i(
+        'BLE Logs cleared successfully',
+        tag: 'BleLogsRepositoryImpl',
+      );
     } on Exception catch (e) {
       AppLogger.e('Failed to clear BLE logs: $e', tag: 'BleLogsRepositoryImpl');
     }

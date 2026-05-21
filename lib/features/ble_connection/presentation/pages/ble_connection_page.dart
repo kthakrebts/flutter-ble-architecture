@@ -19,18 +19,16 @@ class BleConnectionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => sl<BleConnectionBloc>()
-        ..add(ConnectDevice(deviceId: deviceId, deviceName: deviceName)),
+      create: (_) =>
+          sl<BleConnectionBloc>()
+            ..add(ConnectDevice(deviceId: deviceId, deviceName: deviceName)),
       child: _BleConnectionView(deviceId: deviceId, deviceName: deviceName),
     );
   }
 }
 
 class _BleConnectionView extends StatelessWidget {
-  const _BleConnectionView({
-    required this.deviceId,
-    required this.deviceName,
-  });
+  const _BleConnectionView({required this.deviceId, required this.deviceName});
 
   final String deviceId;
   final String deviceName;
@@ -66,9 +64,7 @@ class _BleConnectionView extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(deviceName),
-      ),
+      appBar: AppBar(title: Text(deviceName)),
       body: BlocBuilder<BleConnectionBloc, BleConnectionState>(
         builder: (context, state) {
           final statusColor = _getStatusColor(state.status);
@@ -93,11 +89,17 @@ class _BleConnectionView extends StatelessWidget {
                               ),
                             ),
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 6,
+                              ),
                               decoration: BoxDecoration(
                                 color: statusColor.withAlpha(26),
                                 borderRadius: BorderRadius.circular(20),
-                                border: Border.all(color: statusColor.withAlpha(76), width: 1.5),
+                                border: Border.all(
+                                  color: statusColor.withAlpha(76),
+                                  width: 1.5,
+                                ),
                               ),
                               child: Text(
                                 _getStatusText(state.status),
@@ -113,7 +115,11 @@ class _BleConnectionView extends StatelessWidget {
                         const SizedBox(height: 12),
                         Row(
                           children: [
-                            const Icon(Icons.fingerprint, size: 16, color: Colors.grey),
+                            const Icon(
+                              Icons.fingerprint,
+                              size: 16,
+                              color: Colors.grey,
+                            ),
                             const SizedBox(width: 8),
                             Text(
                               deviceId,
@@ -127,7 +133,8 @@ class _BleConnectionView extends StatelessWidget {
                         const SizedBox(height: 20),
                         Row(
                           children: [
-                            if (state.status == BleConnectionStatus.disconnected)
+                            if (state.status ==
+                                BleConnectionStatus.disconnected)
                               Expanded(
                                 child: ElevatedButton.icon(
                                   onPressed: () {
@@ -156,7 +163,11 @@ class _BleConnectionView extends StatelessWidget {
                                   icon: const Icon(Icons.link_off),
                                   label: const Text('DISCONNECT'),
                                   style: OutlinedButton.styleFrom(
-                                    side: BorderSide(color: theme.colorScheme.error.withAlpha(128)),
+                                    side: BorderSide(
+                                      color: theme.colorScheme.error.withAlpha(
+                                        128,
+                                      ),
+                                    ),
                                     foregroundColor: theme.colorScheme.error,
                                   ),
                                 ),
@@ -179,9 +190,7 @@ class _BleConnectionView extends StatelessWidget {
                       const SizedBox(
                         width: 16,
                         height: 16,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                        ),
+                        child: CircularProgressIndicator(strokeWidth: 2),
                       ),
                   ],
                 ),
@@ -197,7 +206,9 @@ class _BleConnectionView extends StatelessWidget {
                                 Icon(
                                   Icons.schema_outlined,
                                   size: 48,
-                                  color: theme.colorScheme.onSurface.withAlpha(64),
+                                  color: theme.colorScheme.onSurface.withAlpha(
+                                    64,
+                                  ),
                                 ),
                                 const SizedBox(height: 16),
                                 Text(
@@ -218,10 +229,15 @@ class _BleConnectionView extends StatelessWidget {
                             return Card(
                               margin: const EdgeInsets.only(bottom: 8),
                               child: ListTile(
-                                leading: const Icon(Icons.settings_input_component, color: Colors.grey),
+                                leading: const Icon(
+                                  Icons.settings_input_component,
+                                  color: Colors.grey,
+                                ),
                                 title: Text(
                                   _resolveServiceName(serviceUuid),
-                                  style: const TextStyle(fontWeight: FontWeight.bold),
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                                 subtitle: Text(
                                   serviceUuid,

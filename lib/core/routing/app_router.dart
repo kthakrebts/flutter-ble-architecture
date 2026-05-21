@@ -23,17 +23,20 @@ class AppRouter {
       GoRoute(
         path: routeSplash,
         name: 'splash',
-        builder: (BuildContext context, GoRouterState state) => const SplashScreen(),
+        builder: (BuildContext context, GoRouterState state) =>
+            const SplashScreen(),
       ),
       GoRoute(
         path: routeDashboard,
         name: 'dashboard',
-        builder: (BuildContext context, GoRouterState state) => const DashboardPage(),
+        builder: (BuildContext context, GoRouterState state) =>
+            const DashboardPage(),
       ),
       GoRoute(
         path: routeScan,
         name: 'scan',
-        builder: (BuildContext context, GoRouterState state) => const BleScanPage(),
+        builder: (BuildContext context, GoRouterState state) =>
+            const BleScanPage(),
       ),
       GoRoute(
         path: routeDeviceDetails,
@@ -41,24 +44,20 @@ class AppRouter {
         builder: (BuildContext context, GoRouterState state) {
           final extra = state.extra as Map<String, dynamic>?;
           final deviceId = extra?['deviceId'] as String? ?? '';
-          final deviceName = extra?['deviceName'] as String? ?? 'Unknown Device';
-          
-          return BleConnectionPage(
-            deviceId: deviceId,
-            deviceName: deviceName,
-          );
+          final deviceName =
+              extra?['deviceName'] as String? ?? 'Unknown Device';
+
+          return BleConnectionPage(deviceId: deviceId, deviceName: deviceName);
         },
       ),
       GoRoute(
         path: routeLogs,
         name: 'logs',
-        builder: (BuildContext context, GoRouterState state) => const BleLogsPage(),
+        builder: (BuildContext context, GoRouterState state) =>
+            const BleLogsPage(),
       ),
     ],
-    errorBuilder: (context, state) => Scaffold(
-      body: Center(
-        child: Text('Navigation error: ${state.error}'),
-      ),
-    ),
+    errorBuilder: (context, state) =>
+        Scaffold(body: Center(child: Text('Navigation error: ${state.error}'))),
   );
 }

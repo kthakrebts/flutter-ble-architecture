@@ -12,7 +12,8 @@ class App extends StatelessWidget {
       title: 'Flutter BLE Clean Architecture',
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.dark, // Default to sleek developer-centric dark theme
+      themeMode:
+          ThemeMode.dark, // Default to sleek developer-centric dark theme
       routerConfig: AppRouter.router,
       debugShowCheckedModeBanner: false,
     );

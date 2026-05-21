@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockBleRepository extends Mock implements BleRepository {}
+
 class MockBleLogsRepository extends Mock implements BleLogsRepository {}
 
 void main() {
@@ -22,10 +23,15 @@ void main() {
       ..registerLazySingleton<BleLogsRepository>(() => mockLogs);
   });
 
-  testWidgets('App renders splash screen initially', (WidgetTester tester) async {
+  testWidgets('App renders splash screen initially', (
+    WidgetTester tester,
+  ) async {
     await tester.pumpWidget(const App());
     expect(find.text('BLE ARCHITECTURE'), findsOneWidget);
-    expect(find.text('Production-Grade Engineering Foundation'), findsOneWidget);
+    expect(
+      find.text('Production-Grade Engineering Foundation'),
+      findsOneWidget,
+    );
 
     // Let the splash navigation timer complete and settle to avoid test leaks
     await tester.pumpAndSettle(const Duration(seconds: 3));

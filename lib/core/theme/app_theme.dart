@@ -7,13 +7,15 @@ class AppTheme {
 
   // Colors - Dark Theme
   static const Color darkBackground = Color(0xFF0F172A); // Deep slate
-  static const Color darkSurface = Color(0xFF1E293B);    // Card slate
+  static const Color darkSurface = Color(0xFF1E293B); // Card slate
   static const Color darkSurfaceVariant = Color(0xFF334155); // Highlight slate
-  static const Color darkPrimary = Color(0xFF6366F1);    // Bright Indigo
+  static const Color darkPrimary = Color(0xFF6366F1); // Bright Indigo
   static const Color darkPrimaryVariant = Color(0xFF818CF8);
-  static const Color darkSecondary = Color(0xFF0EA5E9);  // Sky Cyan
-  static const Color darkAccent = Color(0xFF10B981);     // Emerald Green (Connected)
-  static const Color darkError = Color(0xFFEF4444);      // Red
+  static const Color darkSecondary = Color(0xFF0EA5E9); // Sky Cyan
+  static const Color darkAccent = Color(
+    0xFF10B981,
+  ); // Emerald Green (Connected)
+  static const Color darkError = Color(0xFFEF4444); // Red
   static const Color darkOnBackground = Color(0xFFF8FAFC); // White/Grey text
   static const Color darkOnSurface = Color(0xFFE2E8F0);
   static const Color darkTextMuted = Color(0xFF94A3B8);
@@ -64,9 +66,7 @@ class AppTheme {
           foregroundColor: Colors.white,
           elevation: 0,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
@@ -74,14 +74,20 @@ class AppTheme {
           foregroundColor: darkOnBackground,
           side: const BorderSide(color: darkSurfaceVariant),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
       ),
       textTheme: const TextTheme(
-        headlineMedium: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: darkOnBackground),
-        titleLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: darkOnBackground),
+        headlineMedium: TextStyle(
+          fontSize: 28,
+          fontWeight: FontWeight.bold,
+          color: darkOnBackground,
+        ),
+        titleLarge: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: darkOnBackground,
+        ),
         bodyLarge: TextStyle(fontSize: 16, color: darkOnSurface),
         bodyMedium: TextStyle(fontSize: 14, color: darkTextMuted),
       ),
@@ -122,9 +128,7 @@ class AppTheme {
           foregroundColor: Colors.white,
           elevation: 0,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
@@ -132,14 +136,20 @@ class AppTheme {
           foregroundColor: lightOnBackground,
           side: const BorderSide(color: lightSurfaceVariant),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
       ),
       textTheme: const TextTheme(
-        headlineMedium: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: lightOnBackground),
-        titleLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: lightOnBackground),
+        headlineMedium: TextStyle(
+          fontSize: 28,
+          fontWeight: FontWeight.bold,
+          color: lightOnBackground,
+        ),
+        titleLarge: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: lightOnBackground,
+        ),
         bodyLarge: TextStyle(fontSize: 16, color: lightOnSurface),
         bodyMedium: TextStyle(fontSize: 14, color: lightTextMuted),
       ),

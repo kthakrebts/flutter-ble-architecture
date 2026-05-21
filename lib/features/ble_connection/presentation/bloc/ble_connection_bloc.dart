@@ -12,9 +12,9 @@ class BleConnectionBloc extends Bloc<BleConnectionEvent, BleConnectionState> {
   BleConnectionBloc({
     required BleRepository bleRepository,
     required BleLogsRepository logsRepository,
-  })  : _bleRepository = bleRepository,
-        _logsRepository = logsRepository,
-        super(const BleConnectionState()) {
+  }) : _bleRepository = bleRepository,
+       _logsRepository = logsRepository,
+       super(const BleConnectionState()) {
     on<ConnectDevice>(_onConnectDevice);
     on<DisconnectDevice>(_onDisconnectDevice);
     on<DiscoverServices>(_onDiscoverServices);
@@ -25,14 +25,19 @@ class BleConnectionBloc extends Bloc<BleConnectionEvent, BleConnectionState> {
   final BleLogsRepository _logsRepository;
   StreamSubscription<BleConnectionStatus>? _statusSubscription;
 
-  Future<void> _onConnectDevice(ConnectDevice event, Emitter<BleConnectionState> emit) async {
-    emit(state.copyWith(
-      status: BleConnectionStatus.connecting,
-      deviceId: event.deviceId,
-      deviceName: event.deviceName,
-      failure: null,
-      services: [],
-    ));
+  Future<void> _onConnectDevice(
+    ConnectDevice event,
+    Emitter<BleConnectionState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        status: BleConnectionStatus.connecting,
+        deviceId: event.deviceId,
+        deviceName: event.deviceName,
+        failure: null,
+        services: [],
+      ),
+    );
 
     await _logsRepository.log(
       'Initiating connection to ${event.deviceName} (${event.deviceId})',
@@ -40,9 +45,11 @@ class BleConnectionBloc extends Bloc<BleConnectionEvent, BleConnectionState> {
     );
 
     _statusSubscription?.cancel();
-    _statusSubscription = _bleRepository.monitorConnection(event.deviceId).listen((status) {
-      add(UpdateConnectionStatus(deviceId: event.deviceId, status: status));
-    });
+    _statusSubscription = _bleRepository
+        .monitorConnection(event.deviceId)
+        .listen((status) {
+          add(UpdateConnectionStatus(deviceId: event.deviceId, status: status));
+        });
 
     try {
       await _bleRepository.connect(event.deviceId);
@@ -52,16 +59,21 @@ class BleConnectionBloc extends Bloc<BleConnectionEvent, BleConnectionState> {
         level: 'ERROR',
         deviceId: event.deviceId,
       );
-      emit(state.copyWith(
-        status: BleConnectionStatus.disconnected,
-        failure: BleFailure(e.toString()),
-      ));
+      emit(
+        state.copyWith(
+          status: BleConnectionStatus.disconnected,
+          failure: BleFailure(e.toString()),
+        ),
+      );
     }
   }
 
-  Future<void> _onDisconnectDevice(DisconnectDevice event, Emitter<BleConnectionState> emit) async {
+  Future<void> _onDisconnectDevice(
+    DisconnectDevice event,
+    Emitter<BleConnectionState> emit,
+  ) async {
     emit(state.copyWith(status: BleConnectionStatus.disconnecting));
-    
+
     await _logsRepository.log(
       'Initiating disconnect from device: ${event.deviceId}',
       deviceId: event.deviceId,
@@ -76,14 +88,19 @@ class BleConnectionBloc extends Bloc<BleConnectionEvent, BleConnectionState> {
         level: 'WARN',
         deviceId: event.deviceId,
       );
-      emit(state.copyWith(
-        status: BleConnectionStatus.disconnected,
-        failure: BleFailure(e.toString()),
-      ));
+      emit(
+        state.copyWith(
+          status: BleConnectionStatus.disconnected,
+          failure: BleFailure(e.toString()),
+        ),
+      );
     }
   }
 
-  Future<void> _onDiscoverServices(DiscoverServices event, Emitter<BleConnectionState> emit) async {
+  Future<void> _onDiscoverServices(
+    DiscoverServices event,
+    Emitter<BleConnectionState> emit,
+  ) async {
     await _logsRepository.log(
       'Starting GATT service discovery for device: ${event.deviceId}',
       deviceId: event.deviceId,
@@ -102,9 +119,7 @@ class BleConnectionBloc extends Bloc<BleConnectionEvent, BleConnectionState> {
         level: 'ERROR',
         deviceId: event.deviceId,
       );
-      emit(state.copyWith(
-        failure: BleFailure(e.toString()),
-      ));
+      emit(state.copyWith(failure: BleFailure(e.toString())));
     }
   }
 
@@ -120,7 +135,7 @@ class BleConnectionBloc extends Bloc<BleConnectionEvent, BleConnectionState> {
     );
 
     emit(state.copyWith(status: event.status));
-    
+
     if (event.status == BleConnectionStatus.connected) {
       add(DiscoverServices(deviceId: event.deviceId));
     }

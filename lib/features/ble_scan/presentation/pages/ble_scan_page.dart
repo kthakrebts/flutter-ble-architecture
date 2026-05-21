@@ -83,11 +83,17 @@ class _BleScanViewState extends State<_BleScanView> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.error_outline, size: 48, color: theme.colorScheme.error),
+                    Icon(
+                      Icons.error_outline,
+                      size: 48,
+                      color: theme.colorScheme.error,
+                    ),
                     const SizedBox(height: 16),
                     Text(
                       'Scan Initialization Failed',
-                      style: theme.textTheme.titleLarge?.copyWith(color: theme.colorScheme.error),
+                      style: theme.textTheme.titleLarge?.copyWith(
+                        color: theme.colorScheme.error,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     Text(
@@ -96,7 +102,8 @@ class _BleScanViewState extends State<_BleScanView> {
                     ),
                     const SizedBox(height: 24),
                     ElevatedButton(
-                      onPressed: () => context.read<BleScanBloc>().add(const StartScan()),
+                      onPressed: () =>
+                          context.read<BleScanBloc>().add(const StartScan()),
                       child: const Text('Retry Scan'),
                     ),
                   ],
@@ -110,14 +117,20 @@ class _BleScanViewState extends State<_BleScanView> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.bluetooth_searching, size: 64, color: theme.colorScheme.primary.withAlpha(128)),
+                  Icon(
+                    Icons.bluetooth_searching,
+                    size: 64,
+                    color: theme.colorScheme.primary.withAlpha(128),
+                  ),
                   const SizedBox(height: 16),
                   const Text(
                     'No BLE Devices Discovered',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
-                  const Text('Ensure Bluetooth is enabled and permissions granted.'),
+                  const Text(
+                    'Ensure Bluetooth is enabled and permissions granted.',
+                  ),
                 ],
               ),
             );
@@ -134,10 +147,7 @@ class _BleScanViewState extends State<_BleScanView> {
                   context.read<BleScanBloc>().add(StopScan());
                   context.push(
                     AppRouter.routeDeviceDetails,
-                    extra: {
-                      'deviceId': device.id,
-                      'deviceName': device.name,
-                    },
+                    extra: {'deviceId': device.id, 'deviceName': device.name},
                   );
                 },
               );
@@ -156,8 +166,12 @@ class _BleScanViewState extends State<_BleScanView> {
               }
             },
             icon: Icon(state.isScanning ? Icons.stop : Icons.search),
-            label: Text(state.isScanning ? 'STOP DISCOVERY' : 'START DISCOVERY'),
-            backgroundColor: state.isScanning ? theme.colorScheme.error : theme.colorScheme.primary,
+            label: Text(
+              state.isScanning ? 'STOP DISCOVERY' : 'START DISCOVERY',
+            ),
+            backgroundColor: state.isScanning
+                ? theme.colorScheme.error
+                : theme.colorScheme.primary,
             foregroundColor: Colors.white,
           );
         },
@@ -167,10 +181,7 @@ class _BleScanViewState extends State<_BleScanView> {
 }
 
 class _DeviceCard extends StatelessWidget {
-  const _DeviceCard({
-    required this.device,
-    required this.onTap,
-  });
+  const _DeviceCard({required this.device, required this.onTap});
 
   final BleDevice device;
   final VoidCallback onTap;

@@ -16,22 +16,20 @@ final GetIt sl = GetIt.instance;
 Future<void> initDI() async {
   // --- Local Storage (Hive) ---
   await Hive.initFlutter();
-  
+
   // Open the telemetry logs box (stores logs as JSON strings)
   final logsBox = await Hive.openBox<String>(AppConstants.bleLogsBox);
 
   // --- Core Services / Repositories ---
   sl
-    ..registerLazySingleton<BleLogsRepository>(() => BleLogsRepositoryImpl(logsBox))
+    ..registerLazySingleton<BleLogsRepository>(
+      () => BleLogsRepositoryImpl(logsBox),
+    )
     ..registerLazySingleton<BleRepository>(BleRepositoryImpl.new)
-
     // --- Features (Blocs) ---
     ..registerFactory(() => BleScanBloc(bleRepository: sl()))
     ..registerFactory(
-      () => BleConnectionBloc(
-        bleRepository: sl(),
-        logsRepository: sl(),
-      ),
+      () => BleConnectionBloc(bleRepository: sl(), logsRepository: sl()),
     )
     ..registerFactory(() => BleLogsBloc(logsRepository: sl()));
 }

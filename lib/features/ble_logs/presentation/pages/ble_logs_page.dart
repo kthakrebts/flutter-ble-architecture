@@ -73,7 +73,9 @@ class _BleLogsView extends StatelessWidget {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
-                  const Text('Perform scans or connect to peripherals to populate logs.'),
+                  const Text(
+                    'Perform scans or connect to peripherals to populate logs.',
+                  ),
                 ],
               ),
             );
@@ -92,11 +94,17 @@ class _BleLogsView extends StatelessWidget {
               itemCount: state.logs.length,
               itemBuilder: (context, index) {
                 final entry = state.logs[index];
-                final timeStr = entry.timestamp.toIso8601String().substring(11, 19);
+                final timeStr = entry.timestamp.toIso8601String().substring(
+                  11,
+                  19,
+                );
                 final levelColor = _getLevelColor(entry.level);
 
                 return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 4,
+                    horizontal: 8,
+                  ),
                   child: RichText(
                     text: TextSpan(
                       style: const TextStyle(
@@ -111,7 +119,10 @@ class _BleLogsView extends StatelessWidget {
                         ),
                         TextSpan(
                           text: '[${entry.level}] ',
-                          style: TextStyle(color: levelColor, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            color: levelColor,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         if (entry.deviceId != null)
                           TextSpan(

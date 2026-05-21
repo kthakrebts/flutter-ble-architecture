@@ -6,10 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// Business Logic Component managing telemetry event log retrieval.
 class BleLogsBloc extends Bloc<BleLogsEvent, BleLogsState> {
-  BleLogsBloc({
-    required BleLogsRepository logsRepository,
-  })  : _logsRepository = logsRepository,
-        super(const BleLogsState()) {
+  BleLogsBloc({required BleLogsRepository logsRepository})
+    : _logsRepository = logsRepository,
+      super(const BleLogsState()) {
     on<LoadLogs>(_onLoadLogs);
     on<ClearLogs>(_onClearLogs);
     on<UpdateLogsList>(_onUpdateLogsList);
@@ -28,7 +27,12 @@ class BleLogsBloc extends Bloc<BleLogsEvent, BleLogsState> {
       final logs = await _logsRepository.getLogs();
       emit(state.copyWith(status: BleLogsStatus.success, logs: logs));
     } on Exception catch (e) {
-      emit(state.copyWith(status: BleLogsStatus.failure, errorMessage: e.toString()));
+      emit(
+        state.copyWith(
+          status: BleLogsStatus.failure,
+          errorMessage: e.toString(),
+        ),
+      );
     }
   }
 
@@ -36,7 +40,12 @@ class BleLogsBloc extends Bloc<BleLogsEvent, BleLogsState> {
     try {
       await _logsRepository.clearLogs();
     } on Exception catch (e) {
-      emit(state.copyWith(status: BleLogsStatus.failure, errorMessage: e.toString()));
+      emit(
+        state.copyWith(
+          status: BleLogsStatus.failure,
+          errorMessage: e.toString(),
+        ),
+      );
     }
   }
 

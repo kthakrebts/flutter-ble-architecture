@@ -74,10 +74,7 @@ class DashboardPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 24),
-              Text(
-                'Navigation Modules',
-                style: theme.textTheme.titleLarge,
-              ),
+              Text('Navigation Modules', style: theme.textTheme.titleLarge),
               const SizedBox(height: 12),
               Row(
                 children: [
@@ -115,7 +112,8 @@ class DashboardPage extends StatelessWidget {
                     children: [
                       _PlatformBridgeTile(
                         platform: 'Android Core (Kotlin)',
-                        status: 'BleManager, BleScanner, BleConnectionManager, GattCallbackHandler',
+                        status:
+                            'BleManager, BleScanner, BleConnectionManager, GattCallbackHandler',
                         icon: Icons.android,
                         statusColor: theme.colorScheme.primary,
                       ),
@@ -185,9 +183,7 @@ class _MenuCard extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 subtitle,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  fontSize: 12,
-                ),
+                style: theme.textTheme.bodyMedium?.copyWith(fontSize: 12),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),

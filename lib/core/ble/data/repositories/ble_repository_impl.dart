@@ -18,10 +18,14 @@ class BleRepositoryImpl implements BleRepository {
       return results.map((r) {
         return BleDevice(
           id: r.device.remoteId.str,
-          name: r.device.platformName.isNotEmpty ? r.device.platformName : 'Unknown Device',
+          name: r.device.platformName.isNotEmpty
+              ? r.device.platformName
+              : 'Unknown Device',
           rssi: r.rssi,
           isConnectable: r.advertisementData.connectable,
-          serviceUuids: r.advertisementData.serviceUuids.map((g) => g.toString()).toList(),
+          serviceUuids: r.advertisementData.serviceUuids
+              .map((g) => g.toString())
+              .toList(),
         );
       }).toList();
     });
@@ -35,7 +39,7 @@ class BleRepositoryImpl implements BleRepository {
     try {
       AppLogger.i('Starting BLE scan...', tag: _tag);
       final uuids = serviceUuids?.map(Guid.new).toList() ?? [];
-      
+
       if (FlutterBluePlus.isScanningNow) {
         await FlutterBluePlus.stopScan();
       }
@@ -45,7 +49,12 @@ class BleRepositoryImpl implements BleRepository {
         timeout: const Duration(seconds: 15),
       );
     } catch (e, stack) {
-      AppLogger.e('Failed to start scan: $e', tag: _tag, error: e, stackTrace: stack);
+      AppLogger.e(
+        'Failed to start scan: $e',
+        tag: _tag,
+        error: e,
+        stackTrace: stack,
+      );
       throw BleException('Failed to start BLE scan: ${e.toString()}');
     }
   }
@@ -66,13 +75,18 @@ class BleRepositoryImpl implements BleRepository {
     try {
       AppLogger.i('Connecting to device: $deviceId', tag: _tag);
       final device = BluetoothDevice.fromId(deviceId);
-      
+
       await device.connect(
         timeout: const Duration(seconds: 15),
         autoConnect: false,
       );
     } catch (e, stack) {
-      AppLogger.e('Failed to connect to device $deviceId: $e', tag: _tag, error: e, stackTrace: stack);
+      AppLogger.e(
+        'Failed to connect to device $deviceId: $e',
+        tag: _tag,
+        error: e,
+        stackTrace: stack,
+      );
       throw BleException('Connection failed: ${e.toString()}');
     }
   }
@@ -114,7 +128,10 @@ class BleRepositoryImpl implements BleRepository {
       final services = await device.discoverServices();
       return services.map((s) => s.uuid.toString()).toList();
     } catch (e) {
-      AppLogger.e('Failed to discover services for device $deviceId: $e', tag: _tag);
+      AppLogger.e(
+        'Failed to discover services for device $deviceId: $e',
+        tag: _tag,
+      );
       throw BleException('Service discovery failed: ${e.toString()}');
     }
   }
