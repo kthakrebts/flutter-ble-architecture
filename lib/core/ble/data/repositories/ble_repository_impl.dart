@@ -55,7 +55,7 @@ class BleRepositoryImpl implements BleRepository {
         error: e,
         stackTrace: stack,
       );
-      throw BleException('Failed to start BLE scan: ${e.toString()}');
+      throw BleException('Failed to start BLE scan: $e');
     }
   }
 
@@ -66,7 +66,7 @@ class BleRepositoryImpl implements BleRepository {
       await FlutterBluePlus.stopScan();
     } catch (e) {
       AppLogger.e('Failed to stop scan: $e', tag: _tag);
-      throw BleException('Failed to stop BLE scan: ${e.toString()}');
+      throw BleException('Failed to stop BLE scan: $e');
     }
   }
 
@@ -78,7 +78,6 @@ class BleRepositoryImpl implements BleRepository {
 
       await device.connect(
         timeout: const Duration(seconds: 15),
-        autoConnect: false,
       );
     } catch (e, stack) {
       AppLogger.e(
@@ -87,7 +86,7 @@ class BleRepositoryImpl implements BleRepository {
         error: e,
         stackTrace: stack,
       );
-      throw BleException('Connection failed: ${e.toString()}');
+      throw BleException('Connection failed: $e');
     }
   }
 
@@ -99,7 +98,7 @@ class BleRepositoryImpl implements BleRepository {
       await device.disconnect();
     } catch (e) {
       AppLogger.e('Failed to disconnect device $deviceId: $e', tag: _tag);
-      throw BleException('Disconnection failed: ${e.toString()}');
+      throw BleException('Disconnection failed: $e');
     }
   }
 
@@ -110,10 +109,12 @@ class BleRepositoryImpl implements BleRepository {
       switch (state) {
         case BluetoothConnectionState.disconnected:
           return BleConnectionStatus.disconnected;
+        // ignore: deprecated_member_use, SDK enum contains these intermediate states which are needed for switch completeness.
         case BluetoothConnectionState.connecting:
           return BleConnectionStatus.connecting;
         case BluetoothConnectionState.connected:
           return BleConnectionStatus.connected;
+        // ignore: deprecated_member_use, SDK enum contains these intermediate states which are needed for switch completeness.
         case BluetoothConnectionState.disconnecting:
           return BleConnectionStatus.disconnecting;
       }
@@ -132,7 +133,7 @@ class BleRepositoryImpl implements BleRepository {
         'Failed to discover services for device $deviceId: $e',
         tag: _tag,
       );
-      throw BleException('Service discovery failed: ${e.toString()}');
+      throw BleException('Service discovery failed: $e');
     }
   }
 }

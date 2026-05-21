@@ -1,11 +1,11 @@
 import 'dart:async';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ble_architecture/core/ble/domain/entities/ble_device.dart';
 import 'package:flutter_ble_architecture/core/ble/domain/repositories/ble_repository.dart';
 import 'package:flutter_ble_architecture/core/error/failures.dart';
 import 'package:flutter_ble_architecture/core/logger/app_logger.dart';
 import 'package:flutter_ble_architecture/features/ble_scan/presentation/bloc/ble_scan_event.dart';
 import 'package:flutter_ble_architecture/features/ble_scan/presentation/bloc/ble_scan_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// Business Logic Component managing BLE peripheral scanning.
 class BleScanBloc extends Bloc<BleScanEvent, BleScanState> {
@@ -24,7 +24,7 @@ class BleScanBloc extends Bloc<BleScanEvent, BleScanState> {
 
     // Subscribe to scan status stream
     _isScanningSubscription = _bleRepository.isScanning.listen((isScanning) {
-      add(UpdateScanningStatus(isScanning));
+      add(UpdateScanningStatus(isScanning: isScanning));
     });
   }
 
@@ -33,7 +33,13 @@ class BleScanBloc extends Bloc<BleScanEvent, BleScanState> {
   StreamSubscription<bool>? _isScanningSubscription;
 
   Future<void> _onStartScan(StartScan event, Emitter<BleScanState> emit) async {
-    emit(state.copyWith(status: BleScanStatus.scanning, failure: null));
+    emit(
+      state.copyWith(
+        status: BleScanStatus.scanning,
+        // ignore: avoid_redundant_argument_values, resetting failure to null on start requires explicit null assignment.
+        failure: null,
+      ),
+    );
     try {
       await _bleRepository.startScan(serviceUuids: event.serviceUuids);
     } on Exception catch (e) {

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ble_architecture/core/ble/domain/entities/ble_connection_status.dart';
 import 'package:flutter_ble_architecture/core/di/injection_container.dart';
 import 'package:flutter_ble_architecture/features/ble_connection/presentation/bloc/ble_connection_bloc.dart';
 import 'package:flutter_ble_architecture/features/ble_connection/presentation/bloc/ble_connection_event.dart';
 import 'package:flutter_ble_architecture/features/ble_connection/presentation/bloc/ble_connection_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 
 class BleConnectionPage extends StatelessWidget {
   const BleConnectionPage({

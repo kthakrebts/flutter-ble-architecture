@@ -34,6 +34,7 @@ class BleConnectionBloc extends Bloc<BleConnectionEvent, BleConnectionState> {
         status: BleConnectionStatus.connecting,
         deviceId: event.deviceId,
         deviceName: event.deviceName,
+        // ignore: avoid_redundant_argument_values, resetting failure to null requires explicit null assignment.
         failure: null,
         services: [],
       ),
@@ -44,7 +45,7 @@ class BleConnectionBloc extends Bloc<BleConnectionEvent, BleConnectionState> {
       deviceId: event.deviceId,
     );
 
-    _statusSubscription?.cancel();
+    await _statusSubscription?.cancel();
     _statusSubscription = _bleRepository
         .monitorConnection(event.deviceId)
         .listen((status) {
@@ -81,7 +82,7 @@ class BleConnectionBloc extends Bloc<BleConnectionEvent, BleConnectionState> {
 
     try {
       await _bleRepository.disconnect(event.deviceId);
-      _statusSubscription?.cancel();
+      await _statusSubscription?.cancel();
     } on Exception catch (e) {
       await _logsRepository.log(
         'Disconnection error: $e',

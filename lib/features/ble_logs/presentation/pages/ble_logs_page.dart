@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ble_architecture/core/di/injection_container.dart';
 import 'package:flutter_ble_architecture/features/ble_logs/presentation/bloc/ble_logs_bloc.dart';
 import 'package:flutter_ble_architecture/features/ble_logs/presentation/bloc/ble_logs_event.dart';
 import 'package:flutter_ble_architecture/features/ble_logs/presentation/bloc/ble_logs_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 
 class BleLogsPage extends StatelessWidget {
   const BleLogsPage({super.key});

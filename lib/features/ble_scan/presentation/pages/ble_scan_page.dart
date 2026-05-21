@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ble_architecture/core/ble/domain/entities/ble_device.dart';
 import 'package:flutter_ble_architecture/core/di/injection_container.dart';
 import 'package:flutter_ble_architecture/core/routing/app_router.dart';
 import 'package:flutter_ble_architecture/features/ble_scan/presentation/bloc/ble_scan_bloc.dart';
 import 'package:flutter_ble_architecture/features/ble_scan/presentation/bloc/ble_scan_event.dart';
 import 'package:flutter_ble_architecture/features/ble_scan/presentation/bloc/ble_scan_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -42,7 +42,7 @@ class _BleScanViewState extends State<_BleScanView> {
       Permission.location,
     ].request();
 
-    if (status[Permission.bluetoothScan]?.isGranted == true && mounted) {
+    if ((status[Permission.bluetoothScan]?.isGranted ?? false) && mounted) {
       context.read<BleScanBloc>().add(const StartScan());
     }
   }

@@ -1,11 +1,11 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
 import 'package:flutter_ble_architecture/core/ble/domain/entities/ble_device.dart';
 import 'package:flutter_ble_architecture/core/ble/domain/repositories/ble_repository.dart';
 import 'package:flutter_ble_architecture/features/ble_scan/presentation/bloc/ble_scan_bloc.dart';
 import 'package:flutter_ble_architecture/features/ble_scan/presentation/bloc/ble_scan_event.dart';
 import 'package:flutter_ble_architecture/features/ble_scan/presentation/bloc/ble_scan_state.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 
 class MockBleRepository extends Mock implements BleRepository {}
 

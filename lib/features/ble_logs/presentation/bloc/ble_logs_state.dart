@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '../../domain/entities/ble_log_entry.dart';
+import 'package:flutter_ble_architecture/features/ble_logs/domain/entities/ble_log_entry.dart';
 
 /// Status of the logs feature.
 enum BleLogsStatus { initial, loading, success, failure }

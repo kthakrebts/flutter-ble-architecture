@@ -34,7 +34,7 @@ class UpdateScanResults extends BleScanEvent {
 
 /// Triggered when scan active state changes.
 class UpdateScanningStatus extends BleScanEvent {
-  const UpdateScanningStatus(this.isScanning);
+  const UpdateScanningStatus({required this.isScanning});
 
   final bool isScanning;
 
